@@ -1,4 +1,4 @@
 # Alumno: ____   _____
 
 # Hash 
-Implementar todos los métodos de ambas técnicas de Hashing. 
+Implementar todos los métodos del Hashing. 

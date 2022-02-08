@@ -2,34 +2,31 @@
 #include <fstream>
 #include <vector>
 #include <sstream>
-#include <chrono>
-#include <unordered_map>
+#include <unordered_map> //hash
+#include "chainhash.h"
 
 using namespace std;
-using namespace std::chrono;
 
 vector<pair<string, string>> loadCSV(string file);
 
 int main()
 {
   vector<pair<string, string>> data = loadCSV("smalldata.csv");
-  unordered_map<string, string> hash; //reeamplazar por su propia implementacion de hash
-
-  auto start = high_resolution_clock::now();
-  for (auto par : data)
-    hash[par.first] = par.second;  
-  auto stop = high_resolution_clock::now();
-  auto duration = duration_cast<microseconds>(stop - start);
-  cout << "Time:" << duration.count() << endl;
+  //unordered_map<string, string> hash; //reeamplazar por su propia implementacion de hash
+  ChainHash<string, string> hash;
+  
+  for (size_t i = 0; i < data.size(); i++)
+    hash.set(data[i].first, data[i].second);   
+  
   cout << "Size of Hash Table: " << hash.bucket_count() << endl;
-
+  
   for (unsigned i = 0; i < hash.bucket_count(); ++i)
   {
-    cout << "bucket #" << i << " contains " << hash.bucket_size(i) << " elements: ";
-    for (auto it = hash.begin(i); it != hash.end(i); ++it)
-      cout << "[" << it->first << ":" << it->second << "] ";
-    cout << "\n";
-  }
+    cout << "bucket #" << i << " contains " << hash.bucket_size(i) << " elements: ";    
+    for (auto it = hash.begin(i); it != hash.end(i); ++it)    
+      cout << std::flush << it->first << " -> ";
+    cout << std::flush<< "\n";
+  }  
 }
 
 vector<pair<string, string>> loadCSV(string file)
