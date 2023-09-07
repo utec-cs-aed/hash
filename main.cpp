@@ -16,7 +16,7 @@ int main()
   ChainHash<string, string> hash;
   
   for (size_t i = 0; i < data.size(); i++)
-    hash.set(data[i].first, data[i].second);   
+    hash.insert(data[i].first, data[i].second);   
   
   cout << "Size of Hash Table: " << hash.bucket_count() << endl;
   
