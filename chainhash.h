@@ -35,7 +35,7 @@ public:
 		
 	}
 
-	TV search(TK key);
+	TV find(TK key);
 
 	void remove(TK key);
 
