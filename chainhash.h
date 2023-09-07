@@ -1,5 +1,5 @@
 #include <vector>
-#include <list>
+#include <forward_list>
 
 using namespace std;
 
@@ -15,27 +15,27 @@ private:
 		TV value;
 		size_t hashcode;		
 	} 
-	list<Entry> *array;
+	forward_list<Entry> *array;//array de listas enlazadas
 	int capacity;//tamanio del array
     int size;//cantidad de elementos totales
 
 public:
-    ChainHash(){
+    ChainHash(int _cap = 10){
 		// TODO: asignar un tamanio inicial al array
-		capacity = 10; 
+		capacity = _cap; 
 		array = new list<Entry>[capacity];
 		size = 0;
 	}
 
-	void set(TK key, TV value){
+	void insert(TK key, TV value){
 		if(fillFactor() >= maxFillFactor) rehashing();
 		size_t hashcode = getHashCode(key);
 		int index = hashcode % capacity;
-		//TODO: insertar el Entry(key, value) en index, manejando colisiones
-		array[index].push_back(Entry(key, value));
+		//TODO: insertar el Entry(key, value) en array[index] verificando si la key ya existe
+		
 	}
 
-	TV get(TK key);
+	TV search(TK key);
 
 	void remove(TK key);
 
